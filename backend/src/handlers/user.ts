@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import {User, UserStore} from '../models/user';
+import { User, UserStore } from '../models/user';
 import jwt from 'jsonwebtoken';
 
 const store = new UserStore();
@@ -16,7 +16,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
 
     next();
   } catch (err) {
-    res.json(`Invalid token ${err}`).status(401);
+    res.json(`Invalid token ${err}`);
   }
 };
 
@@ -42,17 +42,27 @@ const authenticate = async (_req: Request, res: Response) => {
   const user = await store.authenticate(userLogin);
 
   if (user) {
-    const token = jwt.sign({ user: {user_name: user.user_name, user_type: user.user_type} }, process.env.TOKEN_SECRET as string);
+    const token = jwt.sign(
+      { user: { user_name: user.user_name, user_type: user.user_type } },
+      process.env.TOKEN_SECRET as string
+    );
 
     res.json(token);
+    return;
   }
 
-  res.json('Sorry your login was unsuccessful').status(401)
+  res.status(401).send('Sorry your login was unsuccessful');
 };
 
-const user_routes = (app: express.Application) => {
-  app.post('/login', authenticate);
-  app.put('/user', create);
+//Just a request to make sure the token is legit
+const checkToken = async (_req: Request, res: Response) => {
+  res.json('success');
 };
 
-export default user_routes;
+const userRoutes = (app: express.Application) => {
+  app.post('/api/check', verifyToken, checkToken);
+  app.post('/api/login', authenticate);
+  app.put('/api/user', create);
+};
+
+export default userRoutes;

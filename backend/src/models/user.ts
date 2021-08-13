@@ -11,26 +11,26 @@ const pepper = 'WHmEqa';
 const saltRounds = '10';
 
 export class UserStore {
-  async authenticate(userLogin: User): Promise<User|null> {
+  async authenticate(userLogin: User): Promise<User | null> {
     try {
       const connection = await client.connect();
-      const query =
-        'SELECT * FROM users WHERE user_name=($1)';
+      const query = 'SELECT * FROM users WHERE user_name=($1)';
 
       const result = await connection.query(query, [userLogin.user_name]);
       connection.release();
 
       const user = result.rows[0];
 
-      if (user && bcrypt.compareSync(userLogin.password+pepper, user.password)) {
+      if (
+        user &&
+        bcrypt.compareSync(userLogin.password + pepper, user.password)
+      ) {
         return user;
       }
 
       return null;
     } catch (err) {
-      throw new Error(
-        `Sorry we had an issue logging in, error: ${err}`
-      );
+      throw new Error(`Sorry we had an issue logging in, error: ${err}`);
     }
   }
 

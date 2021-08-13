@@ -14,7 +14,7 @@ const {
 
 let client: Pool = new Pool();
 
-const databaseName = ENV ===  'test' ? POSTGRES_TEST_DB : POSTGRES_DB
+const databaseName = ENV === 'test' ? POSTGRES_TEST_DB : POSTGRES_DB;
 
 client = new Pool({
   host: POSTGRES_HOST,

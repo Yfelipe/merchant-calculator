@@ -1,1 +1,1 @@
-# merchent-calculator
+# merchant-calculator

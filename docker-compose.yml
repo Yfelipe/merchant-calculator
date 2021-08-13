@@ -11,12 +11,12 @@ services:
       - 'postgres:/var/lib/postgresql/data'
 
   nodejs:
-    image: node:12-alpine
+    image: node:16-alpine
     depends_on:
       - postgres
     volumes:
       - './backend/:/backend/'
-    command: sh -c "cd /backend/ && yarn && yarn run watch"
+    command: sh -c "cd /backend/ && npm i && npm run migrate && npm run watch"
     expose: [3000]
     ports:
       - '3000:3000'
@@ -25,6 +25,7 @@ services:
     image: nginx
     depends_on:
       - postgres
+      - nodejs
     ports:
       - "80:80"
     volumes:

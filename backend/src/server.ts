@@ -1,15 +1,31 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import user_routes from "./handlers/user";
+import fileUpload from 'express-fileupload';
+import userRoutes from './handlers/user';
+import merchantCostRoutes from './handlers/merchantCost';
 
 const app: express.Application = express();
+
 const address: string = '0.0.0.0:3000';
 const port: number = 3000;
 
-app.use(bodyParser.json())
+app.use(fileUpload());
 
-user_routes(app);
+//This is just for dev and local, this would not go to production
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  next();
+});
+
+app.use(bodyParser.json());
+
+userRoutes(app);
+merchantCostRoutes(app);
 
 app.listen(port, function () {
-    console.log(`starting app on: ${address}`);
+  console.log(`starting app on: ${address}`);
 });

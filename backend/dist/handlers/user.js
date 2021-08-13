@@ -50,7 +50,7 @@ var verifyToken = function (req, res, next) {
         next();
     }
     catch (err) {
-        res.json("Invalid token " + err).status(401);
+        res.json("Invalid token " + err);
     }
 };
 var create = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -87,14 +87,23 @@ var authenticate = function (_req, res) { return __awaiter(void 0, void 0, void 
                 if (user) {
                     token = jsonwebtoken_1["default"].sign({ user: { user_name: user.user_name, user_type: user.user_type } }, process.env.TOKEN_SECRET);
                     res.json(token);
+                    return [2 /*return*/];
                 }
-                res.json('Sorry your login was unsuccessful').status(401);
+                res.status(401).send('Sorry your login was unsuccessful');
                 return [2 /*return*/];
         }
     });
 }); };
-var user_routes = function (app) {
-    app.post('/login', authenticate);
-    app.put('/user', create);
+//Just a request to make sure the token is legit
+var checkToken = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        res.json('success');
+        return [2 /*return*/];
+    });
+}); };
+var userRoutes = function (app) {
+    app.post('/api/check', verifyToken, checkToken);
+    app.post('/api/login', authenticate);
+    app.put('/api/user', create);
 };
-exports["default"] = user_routes;
+exports["default"] = userRoutes;

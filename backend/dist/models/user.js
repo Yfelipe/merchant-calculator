@@ -63,7 +63,8 @@ var UserStore = /** @class */ (function () {
                         result = _a.sent();
                         connection.release();
                         user = result.rows[0];
-                        if (user && bcrypt_1["default"].compareSync(userLogin.password + pepper, user.password)) {
+                        if (user &&
+                            bcrypt_1["default"].compareSync(userLogin.password + pepper, user.password)) {
                             return [2 /*return*/, user];
                         }
                         return [2 /*return*/, null];

@@ -10,7 +10,7 @@ export interface IndustryValues {
   price?: number;
 }
 
-interface IndustryReturnValues {
+export interface IndustryReturnValues {
   exact_type_price?: Array<number>;
   previous_type_price?: Array<number>;
   next_type_price?: Array<number>;
@@ -19,9 +19,7 @@ interface IndustryReturnValues {
 
 export class MerchantCostStore {
   async addFile(): Promise<string> {
-    const fileStream = fs.createReadStream(
-      '/backend/uploads/merchant_cost.csv'
-    );
+    const fileStream = fs.createReadStream('/backend/uploads/merchant_cost.csv');
     const reader = readline.createInterface({ input: fileStream });
 
     let merchantCostArray: [string, string, number | null, number][] = [];
@@ -35,8 +33,7 @@ export class MerchantCostStore {
           //Set value to const to make it easier to understand the order
           const industry = rowArray[0];
           const type = rowArray[1];
-          const value =
-            rowArray[2] === '' ? null : (rowArray[2] as unknown as number);
+          const value = rowArray[2] === '' ? null : (rowArray[2] as unknown as number);
           const price = rowArray[3] as unknown as number;
 
           merchantCostArray.push([industry, type, value, price]);
@@ -102,9 +99,22 @@ export class MerchantCostStore {
 
       return result.rows[0];
     } catch (err) {
-      throw new Error(
-        `Sorry we had an issue getting industry data, error: ${err}`
-      );
+      throw new Error(`Sorry we had an issue getting industry data, error: ${err}`);
+    }
+  }
+
+  async getIndustryNames(): Promise<Array<string>> {
+    try {
+      const connection = await client.connect();
+
+      const query = 'SELECT DISTINCT industry FROM merchant_cost';
+
+      const result = await connection.query(query);
+      connection.release();
+
+      return result.rows;
+    } catch (err) {
+      throw new Error(`Sorry we had an issue getting industry names, error: ${err}`);
     }
   }
 }

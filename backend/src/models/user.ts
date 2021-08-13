@@ -21,10 +21,7 @@ export class UserStore {
 
       const user = result.rows[0];
 
-      if (
-        user &&
-        bcrypt.compareSync(userLogin.password + pepper, user.password)
-      ) {
+      if (user && bcrypt.compareSync(userLogin.password + pepper, user.password)) {
         return user;
       }
 
@@ -40,10 +37,7 @@ export class UserStore {
       const query =
         'INSERT INTO users (user_name, user_type, password) VALUES($1, $2, $3) RETURNING id, user_name, user_type';
 
-      const hash = bcrypt.hashSync(
-        user.password + pepper,
-        parseInt(saltRounds)
-      );
+      const hash = bcrypt.hashSync(user.password + pepper, parseInt(saltRounds));
 
       const result = await connection.query(query, [
         user.user_name,

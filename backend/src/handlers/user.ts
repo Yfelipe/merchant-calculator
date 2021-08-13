@@ -9,10 +9,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     const authorizationHeader = req.headers.authorization as string;
     const token = authorizationHeader.split(' ')[1];
 
-    req.body.decodedToken = jwt.verify(
-      token,
-      process.env.TOKEN_SECRET as string
-    );
+    req.body.decodedToken = jwt.verify(token, process.env.TOKEN_SECRET as string);
 
     next();
   } catch (err) {

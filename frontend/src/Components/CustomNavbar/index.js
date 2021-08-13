@@ -28,17 +28,12 @@ const CustomNavbar = () => {
             <NavDropdown.Item href={'/'}>Calculate</NavDropdown.Item>
           );
         default:
-          authItemList.push(
-            <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
-          );
+          authItemList.push(<NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>);
           break;
       }
 
       return (
-        <NavDropdown
-          title={`Welcome ${user.user_name}`}
-          id="collasible-nav-dropdown"
-        >
+        <NavDropdown title={`Welcome ${user.user_name}`} id="collasible-nav-dropdown">
           {authItemList}
         </NavDropdown>
       );

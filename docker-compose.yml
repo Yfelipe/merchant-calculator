@@ -16,7 +16,8 @@ services:
       - postgres
     volumes:
       - './backend/:/backend/'
-    command: sh -c "cd /backend/ && npm i && npm run migrate && npm run watch"
+      - './frontend/:/frontend/'
+    command: sh -c "cd /frontend/ && npm i && npm run build && cd /backend/ && npm i && npm run migrate && npm run watch"
     expose: [3000]
     ports:
       - '3000:3000'

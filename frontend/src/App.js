@@ -44,17 +44,10 @@ const App = () => {
       switch (user.user_type) {
         case 'admin':
           routeList.push(
-            <Route
-              key="uploadFile"
-              path="/upload"
-              exact
-              component={UploadFile}
-            />
+            <Route key="uploadFile" path="/upload" exact component={UploadFile} />
           );
         default:
-          routeList.push(
-            <Route key="calculate" path="/" exact component={Calculate} />
-          );
+          routeList.push(<Route key="calculate" path="/" exact component={Calculate} />);
           break;
       }
     }

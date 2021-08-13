@@ -15,7 +15,7 @@ const uploadFile = async (_req: Request, res: Response) => {
   const uploadPath = '/backend/uploads/merchant_cost.csv';
 
   //Save a copy of the file on backend/upload, this will be also used to import to db
-  costCsv.mv(uploadPath, function (err: any) {
+  costCsv.mv(uploadPath, function (err: string) {
     if (err) return res.status(500).send(err);
   });
 
@@ -74,9 +74,24 @@ const calculate = async (_req: Request, res: Response) => {
   }
 };
 
+const getIndustryName = async (_req: Request, res: Response) => {
+  const result = await store.getIndustryNames();
+
+  let names: string[] = [];
+
+  if (result) {
+    result.map((industry) => {
+      names.push(...Object.values(industry)[0].split('/'));
+    });
+  }
+
+  res.json(names);
+};
+
 const merchantCostRoutes = (app: express.Application) => {
   app.post('/api/upload', verifyAdminToken, uploadFile);
   app.post('/api/calculate', verifyToken, calculate);
+  app.get('/api/industries', verifyToken, getIndustryName);
 };
 
 export default merchantCostRoutes;

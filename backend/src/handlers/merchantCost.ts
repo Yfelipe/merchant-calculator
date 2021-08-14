@@ -60,8 +60,12 @@ const calculate = async (_req: Request, res: Response) => {
     ? transactionCount.exact_type_price[1]
     : runInterpolation(transactionCount, calculationParams.transaction_count);
 
-  //Only sum if all values are true
-  if (terminalPrice && transactionVolumePrice && transactionCountPrice) {
+  //Only sum if all values are not undefined
+  if (
+    terminalPrice !== undefined &&
+    transactionVolumePrice !== undefined &&
+    transactionCountPrice !== undefined
+  ) {
     const total = (
       terminalPrice +
       transactionVolumePrice +
@@ -70,7 +74,7 @@ const calculate = async (_req: Request, res: Response) => {
 
     return res.json(total);
   } else {
-    res.json('Values for parameters supplied not found');
+    res.status(404).json('Values for parameters supplied not found');
   }
 };
 

@@ -79,6 +79,9 @@ const Calculate = () => {
                   disabled={noIndustriesFound}
                   onChange={handleChange}
                 >
+                  <option disabled selected hidden value="">
+                    Please select industry
+                  </option>
                   {noIndustriesFound ? (
                     <option>No industries found</option>
                   ) : (
@@ -122,7 +125,7 @@ const Calculate = () => {
           </Card.Body>
         ) : (
           <Card.Body>
-            <Card.Text>Merchant price ${valueState} NZD</Card.Text>
+            <Card.Text>Merchant cost price ${valueState} NZD</Card.Text>
             <Button
               variant="primary"
               style={{ float: 'right' }}

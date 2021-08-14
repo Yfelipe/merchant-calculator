@@ -86,7 +86,7 @@ export class MerchantCostStore {
       if (value) {
         //I use 3 sub queries to get exact_type_price or null, previous_type_price or null and next_type_price or null
         query =
-          'SELECT (SELECT ARRAY[value, price] FROM merchant_cost s1 WHERE s1.value = ($3) AND industry LIKE ($1) AND type = ($2)) AS exact_type_price,(SELECT  ARRAY[value, price] FROM merchant_cost s2 WHERE s2.value < ($3) AND industry LIKE ($1) AND type = ($2) ORDER BY value DESC LIMIT 1) AS previous_type_price, (SELECT ARRAY[value, price] FROM merchant_cost s3 WHERE s3.value > ($3) AND industry LIKE ($1) AND type = ($2) ORDER BY value ASC LIMIT 1) AS next_type_price FROM merchant_cost s WHERE industry LIKE ($1) AND type = ($2) LIMIT 1';
+          'SELECT (SELECT ARRAY[value, price] FROM merchant_cost s1 WHERE s1.value = ($3) AND industry LIKE ($1) AND type = ($2) LIMIT 1) AS exact_type_price,(SELECT  ARRAY[value, price] FROM merchant_cost s2 WHERE s2.value < ($3) AND industry LIKE ($1) AND type = ($2) ORDER BY value DESC LIMIT 1) AS previous_type_price, (SELECT ARRAY[value, price] FROM merchant_cost s3 WHERE s3.value > ($3) AND industry LIKE ($1) AND type = ($2) ORDER BY value ASC LIMIT 1) AS next_type_price FROM merchant_cost s WHERE industry LIKE ($1) AND type = ($2) LIMIT 1';
         params = [`%${industry}%`, type, value];
       } else {
         query =

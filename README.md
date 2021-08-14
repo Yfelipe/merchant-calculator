@@ -16,6 +16,12 @@ An env file is provided to easily bring the project up:
 docker-compose up --build -d
 ```
 
+### Used ports
+
+- nginx: 80 
+- nodejs: 3000
+- postgres: 5432
+
 ### [optional] Access postgres DB
 ```bash
 docker-compose exec postgres bash
@@ -25,9 +31,9 @@ psql database -U dbuser
 
 ## Usage
 
-The project can be reached at localhost.
+The project can be reached at localhost:80 or just click the link http://localhost.
 
-When the project was brought up an admin user and a normal user where created.
+When the project was brought up with docker-compose a admin user and a normal user were created.
 
 #### Login credentials
 

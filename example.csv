@@ -1,0 +1,32 @@
+Industry, Type, Value, Price
+Bars/Taverns/Night Clubs, TRANSACTION_VOLUME, 5000, 20.00
+Others, TRANSACTION_VOLUME, 5000, 20.00
+Bakeries, TRANSACTION_COUNT, 100, 10.00
+Bakeries, TRANSACTION_VOLUME, 5000, 20.00
+Bakeries, TERMINAL,, 50.00
+Others, TERMINAL,, 50.00
+Bars/Taverns/Night Clubs, TRANSACTION_VOLUME, 10000, 10.00
+Others, TRANSACTION_COUNT, 100, 20.00
+Charitable and Social Service Organizations, TRANSACTION_COUNT, 1000000, 0.00
+Bars/Taverns/Night Clubs, TRANSACTION_COUNT, 30000, 0.00
+Bars/Taverns/Night Clubs, TRANSACTION_VOLUME, 10000000, 0.00
+Charitable and Social Service Organizations, TRANSACTION_COUNT, 10, 10.00
+Bars/Taverns/Night Clubs, TRANSACTION_COUNT, 100000, 0.00
+Charitable and Social Service Organizations, TRANSACTION_VOLUME, 10000000, 0.00
+Bars/Taverns/Night Clubs, TERMINAL,, 60.00
+Bars/Taverns/Night Clubs, TRANSACTION_VOLUME, 100000, 0.00
+Charitable and Social Service Organizations, TRANSACTION_COUNT, 1000, 0.00
+Bakeries, TRANSACTION_VOLUME, 10000, 10.00
+Charitable and Social Service Organizations, TERMINAL,, 25.00
+Others, TRANSACTION_VOLUME, 100000000, 0.00
+Charitable and Social Service Organizations, TRANSACTION_VOLUME, 50000, 0.00
+Bakeries, TRANSACTION_COUNT, 1000000, 0.00
+Others, TRANSACTION_VOLUME, 100000, 0.00
+Charitable and Social Service Organizations, TRANSACTION_VOLUME, 1000, 10.00
+Bakeries, TRANSACTION_COUNT, 5000, 5.00
+Bakeries, TRANSACTION_VOLUME, 100000, 0.00
+Bakeries, TRANSACTION_VOLUME, 10000000, 0.00
+Bakeries, TRANSACTION_COUNT, 25000, 0.00
+Others, TRANSACTION_COUNT, 1000000, 0.00
+Others, TRANSACTION_COUNT, 25000, 0.00
+Bars/Taverns/Night Clubs, TRANSACTION_COUNT, 10, 10.00

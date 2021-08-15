@@ -49,6 +49,7 @@ When the project was brought up with docker-compose a admin user and a normal us
 #### Upload cost file
 
 If your logged in as Manager which is an admin type user you will have the option "Upload file" in the dropdown on the top right.
+An example CSV is provided in the project directory to be uploaded "example.csv".
 
 ![Screenshot from 2021-08-14 07-22-40](https://user-images.githubusercontent.com/44851100/129427460-0b59e61c-2a4b-4131-b23f-e08564d44ef0.png)
 

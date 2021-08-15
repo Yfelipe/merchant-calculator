@@ -19,7 +19,9 @@ const uploadFile = async (_req: Request, res: Response) => {
     if (err) return res.status(500).send(err);
   });
 
-  const result = await store.addFile();
+  const result = await store.addFile().catch((e) => {
+    res.status(500).json(e.message);
+  });
 
   res.json(result);
 };

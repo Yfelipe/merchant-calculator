@@ -19,56 +19,49 @@ export interface IndustryReturnValues {
 
 export class MerchantCostStore {
   async addFile(): Promise<string> {
-    const fileStream = fs.createReadStream('/backend/uploads/merchant_cost.csv');
-    const reader = readline.createInterface({ input: fileStream });
-
     let merchantCostArray: [string, string, number | null, number][] = [];
 
-    try {
-      reader
-        .on('line', (line) => {
-          //Remove any empty space and splits to array
-          const rowArray = line.split(',').map((item) => item.replace(' ', ''));
+    const data = fs.readFileSync('/backend/uploads/merchant_cost.csv');
 
-          //Set value to const to make it easier to understand the order
-          const industry = rowArray[0];
-          const type = rowArray[1];
-          const value = rowArray[2] === '' ? null : (rowArray[2] as unknown as number);
-          const price = rowArray[3] as unknown as number;
+    const lineArray = data.toString().replace(/\r\n/g, '\n').split('\n');
 
-          merchantCostArray.push([industry, type, value, price]);
-        })
-        .on('close', async () => {
-          //Open connection and clean table before new lines
-          const connection = await client.connect();
+    lineArray.map((line) => {
+      if (line.length > 0) {
+        const rowArray = line.split(',').map((item) => item.replace(' ', ''));
 
-          await connection.query('DELETE FROM merchant_cost');
+        //Set value to const to make it easier to understand the order
+        const industry = rowArray[0];
+        const type = rowArray[1];
+        const value = rowArray[2] === '' ? null : (rowArray[2] as unknown as number);
+        const price = rowArray[3] as unknown as number;
 
-          connection.release();
-        })
-        .on('close', async () => {
-          //Shift one line to remove file header
-          merchantCostArray.shift();
+        merchantCostArray.push([industry, type, value, price]);
+      }
+    });
 
-          //Open connection and insert the array created previously
-          const connection = await client.connect();
+    //Open connection, clean table then add new lines
+    const connection = await client.connect();
 
-          const insertQuery = format(
-            'INSERT INTO merchant_cost(industry, type, value, price) VALUES %L',
-            merchantCostArray
-          );
+    //Check if our array has data before removing previous data and inserting new
+    if (merchantCostArray.length > 0) {
+      await connection.query('DELETE FROM merchant_cost').then(async () => {
+        merchantCostArray.shift();
 
-          await connection.query(insertQuery);
+        const insertQuery = format(
+          'INSERT INTO merchant_cost(industry, type, value, price) VALUES %L',
+          merchantCostArray
+        );
 
-          connection.release();
-        });
-    } catch (err) {
-      throw new Error(
-        `Sorry we had an issue importing merchant cost data, error: ${err}`
-      );
+        await connection.query(insertQuery);
+      });
+
+      connection.release();
+
+      return 'The file has been loaded successfully.';
+    } else {
+      //Throw an error if the file read comes back empty after processing
+      throw new Error('Sorry we had an issues processing your file, please try again.');
     }
-
-    return 'File added successfully';
   }
 
   async getIndustryTypeValue(
